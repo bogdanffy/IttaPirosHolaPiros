@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    tools:context="com.example.bogdan.ittapirosholapiros.MainActivity">
+
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical"
+        android:id="@+id/gombok_Layout"
+        >
+
+        <Button
+            android:id="@+id/ujJatek_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Új játék"
+            android:textSize="22dp"
+            android:background="@drawable/buttonshape"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="5"
+            android:layout_margin="5dp"
+
+            />
+        <Button
+            android:id="@+id/rekord_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Rekord"
+            android:textSize="22dp"
+            android:background="@drawable/buttonshape"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="5"
+            android:layout_margin="5dp"
+
+            />
+        <Button
+            android:id="@+id/nevjegy_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Névjegy"
+            android:textSize="22dp"
+            android:background="@drawable/buttonshape"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="5"
+            android:layout_margin="5dp"
+
+            />
+        <Button
+            android:id="@+id/kilepes_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Kilépés"
+            android:textSize="22dp"
+            android:background="@drawable/buttonshape"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#A8A8A8"
+            android:shadowDx="4"
+            android:shadowDy="4"
+            android:shadowRadius="5"
+            android:layout_margin="5dp"
+
+            />
+    </android.support.v7.widget.LinearLayoutCompat>
+
+</RelativeLayout>

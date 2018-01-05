@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.Random;
 
@@ -29,14 +30,15 @@ public class JatekActivity extends AppCompatActivity {
     private ImageView kartya1, kartya2, kartya3;
     private Button ujJatek;
     private int nyertesLap;
-    private boolean isClicked;
+    private boolean isClicked, isNyert;
     private Point kozepsoLapHelyzet;
     private ObjectAnimator translateAnimationKartya1, translateAnimationKartya2;
     private AnimatorSet setAnimation;
     private JatekDBHandler dbHandler;
-    private int maxPontSzam;
+    private int maxPontSzam, jelenlegiPontszam;
     private Pontszamok pontszamok;
     private String maxPt;
+    private TextView maxPtTextView;
 
 
 
@@ -51,7 +53,8 @@ public class JatekActivity extends AppCompatActivity {
         ujJatek = (Button) findViewById(R.id.ujJatek_btn);
         dbHandler = new JatekDBHandler(this, null, null, 1);
         maxPontSzam = 0;
-
+        jelenlegiPontszam = 0;
+        maxPtTextView = (TextView) findViewById(R.id.maxPt_textView);
 
 
 
@@ -68,15 +71,16 @@ public class JatekActivity extends AppCompatActivity {
 
                 if(nyertesLap == 1){
                     kartya1.setImageResource(R.drawable.elolap1);
-                    maxPontSzam++;
+                    jelenlegiPontszam++;
+                    isNyert = true;
                 }
                 else{
                     kartya1.setImageResource(R.drawable.elolap2);
-                    if(maxPontSzam != 0){
-                        maxPt = maxPontSzam + " Pont";
-                        pontszamok = new Pontszamok(maxPt);
-                        dbHandler.addPontszam(pontszamok);
+                    if(jelenlegiPontszam != 0){
+                        // Azért raktam be ide is, hogy ha véletlenül kilépne a felhasználó, de rekordot döntött, akkor is mentődjön el a rekord az adatbázisba
+                        setMaxPont();
                     }
+                    isNyert = false;
                 }
             }
         });
@@ -89,15 +93,15 @@ public class JatekActivity extends AppCompatActivity {
 
                 if(nyertesLap == 2){
                     kartya2.setImageResource(R.drawable.elolap1);
-                    maxPontSzam++;
+                    jelenlegiPontszam++;
+                    isNyert = true;
                 }
                 else{
                     kartya2.setImageResource(R.drawable.elolap2);
-                    if(maxPontSzam != 0){
-                        maxPt = maxPontSzam + " Pont";
-                        pontszamok = new Pontszamok(maxPt);
-                        dbHandler.addPontszam(pontszamok);
+                    if(jelenlegiPontszam != 0){
+                        setMaxPont();
                     }
+                    isNyert = false;
                 }
             }
         });
@@ -110,15 +114,15 @@ public class JatekActivity extends AppCompatActivity {
 
                 if(nyertesLap == 3){
                     kartya3.setImageResource(R.drawable.elolap1);
-                    maxPontSzam++;
+                    jelenlegiPontszam++;
+                    isNyert = true;
                 }
                 else{
                     kartya3.setImageResource(R.drawable.elolap2);
-                    if(maxPontSzam != 0){
-                        maxPt = maxPontSzam + " Pont";
-                        pontszamok = new Pontszamok(maxPt);
-                        dbHandler.addPontszam(pontszamok);
+                    if(jelenlegiPontszam != 0){
+                        setMaxPont();
                     }
+                    isNyert = false;
                 }
             }
         });
@@ -131,7 +135,12 @@ public class JatekActivity extends AppCompatActivity {
                 isClickable();
                 setAnimation.play(translateAnimationKartya1).with(translateAnimationKartya2);
 
-                maxPontSzam = 0;
+                if(!isNyert){
+                    jelenlegiPontszam = 0;
+                }
+                else {
+                    setMaxPont();
+                }
 
                 kartya1.setImageResource(R.drawable.hatter1);
                 kartya2.setImageResource(R.drawable.hatter1);
@@ -197,12 +206,22 @@ public class JatekActivity extends AppCompatActivity {
         setAnimation = new AnimatorSet();
     }
 
+    public void setMaxPont(){
+        if (jelenlegiPontszam > maxPontSzam){
+            maxPontSzam = jelenlegiPontszam;
+            maxPt = maxPontSzam + " Pont";
+            maxPtTextView.setText("Rekord: " + maxPt);
+
+            pontszamok = new Pontszamok(maxPt);
+            dbHandler.addPontszam(pontszamok);
+        }
+
+    }
+
     @Override
     public void onBackPressed() {
         if(maxPontSzam != 0){
-            maxPt = maxPontSzam + " Pont";
-            pontszamok = new Pontszamok(maxPt);
-            dbHandler.addPontszam(pontszamok);
+            setMaxPont();
         }
 
         Intent gonext = new Intent (JatekActivity.this, MainActivity.class);
